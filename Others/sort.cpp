@@ -34,3 +34,20 @@ void InsertionSort(vector<int> &nums) {
         nums[j + 1] = temp;
     }
 }
+
+void ShellSort(vector<int> &nums) {
+    int len = nums.size();
+    for (int step = len / 2; step > 0; step /= 2) {
+        for (int i = 0; i < step; i++) {
+            for (int j = i + step; j < len; j += step) {
+                int temp = nums[j];
+                int pre_index = j - step;
+                while (pre_index >= 0 && nums[pre_index] > temp) {
+                    nums[pre_index + step] = nums[pre_index];
+                    pre_index -= step;
+                }
+                nums[pre_index + step] = temp;
+            }
+        }
+    }
+}
