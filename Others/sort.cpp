@@ -1,4 +1,4 @@
-//O(n^2)
+//O(n^2) stable
 void BubbleSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = 0; i < len - 1; i++) {
@@ -21,7 +21,7 @@ void SelectionSort(vector<int> &nums) {
     }
 }
 
-//O(n^2)
+//O(n^2) stable
 void InsertionSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = 0; i < len - 1; i++) {
@@ -54,27 +54,47 @@ void ShellSort(vector<int> &nums) {
 }
 
 //O(nlogn)
-int partition(vector<int> &nums, int l, int r) {
-    int pivot = nums[r];
+int partition(vector<int> &n, int l, int r) {
+    int pivot = n[r];
     int i = l - 1;
     for (int j = l; j < r; j++) {
-        if (nums[j] <= pivot) {
+        if (n[j] <= pivot) {
             i++;
-            swap(nums[i], nums[j]);
+            swap(n[i], n[j]);
         }
     }
-    swap(nums[i + 1], nums[r]);
+    swap(n[i + 1], n[r]);
     return i + 1;
 }
 
-void qsort(vector<int> &nums, int l, int r) {
+void qsort(vector<int> &n, int l, int r) {
     if (l >= r) return;
-    int mid = partition(nums, l, r);
-    qsort(nums, l, mid - 1);
-    qsort(nums, mid + 1, r);
+    int mid = partition(n, l, r);
+    qsort(n, l, mid - 1);
+    qsort(n, mid + 1, r);
 }
 
 void QuickSort(vector<int> &nums) {
     int len = nums.size();
     qsort(nums, 0, len - 1);
+}
+
+//O(nlogn) stable
+void msort(vector<int> &n, vector<int> &t, int l, int r) {
+    if (r - l == 1) return;
+    int mid = l + r >> 1, tmid = l + r >> 1, tl = l, i = l;
+    msort(n, t, l, mid), mergeSort(n, t, mid, r);
+    while (tl < mid || tmid < r) {
+        if (tmid >= r || (tl < mid && n[tl] <= n[tmid]))
+            t[i++] = n[tl++];
+        else
+            t[i++] = n[tmid++];
+    }
+    for (int i = l; i < r; i++)
+        n[i] = t[i];
+}
+void MergeSort(vector<int> &nums) {
+    int len = nums.size();
+    vector<int> T(len);
+    msort(nums, T, 0, len);
 }
