@@ -98,3 +98,26 @@ void MergeSort(vector<int> &nums) {
     vector<int> T(len);
     msort(nums, T, 0, len);
 }
+
+//O(nlogn)
+void adjustHeap(vector<int> &n, int i, int len) {
+    int maxIndex = i;
+    if (i * 2 + 1 < len && n[i * 2 + 1] > n[maxIndex])
+        maxIndex = i * 2 + 1;
+    if (i * 2 + 2 < len && n[i * 2 + 2] > n[maxIndex])
+        maxIndex = i * 2 + 2;
+    if (maxIndex != i) {
+        swap(n[maxIndex], n[i]);
+        adjustHeap(n, maxIndex,len);
+    }
+}
+
+void Sort(vector<int> &nums) {
+    int len = nums.size();
+    for (int i = len / 2 - 1; i >= 0; i--)
+        adjustHeap(nums, i,len);
+    for (int i = len - 1; i > 0; i--) {
+        swap(nums[0], nums[i]);
+        adjustHeap(nums, 0, i);
+    }
+}
