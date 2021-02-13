@@ -1,15 +1,15 @@
-//O(n^2) stable
+// O(n^2)
 void BubbleSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = 0; i < len - 1; i++) {
-        for (int j = 0; j < len - i - 1; j++) {
+        for (int j = 0; j + 1 < len - i; j++) {
             if (nums[j] > nums[j + 1])
                 swap(nums[j], nums[j + 1]);
         }
     }
 }
 
-//O(n^2)
+// O(n^2)
 void SelectionSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = 0; i < len - 1; i++) {
@@ -21,7 +21,7 @@ void SelectionSort(vector<int> &nums) {
     }
 }
 
-//O(n^2) stable
+// O(n^2)
 void InsertionSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = 0; i < len - 1; i++) {
@@ -35,7 +35,7 @@ void InsertionSort(vector<int> &nums) {
     }
 }
 
-//O(nlogn)
+// O(nlogn)
 void ShellSort(vector<int> &nums) {
     int len = nums.size();
     for (int step = len / 2; step > 0; step /= 2) {
@@ -53,12 +53,12 @@ void ShellSort(vector<int> &nums) {
     }
 }
 
-//O(nlogn)
+// O(nlogn)
 int partition(vector<int> &n, int l, int r) {
-    int pivot = n[r];
+    int temp = n[r];
     int i = l - 1;
     for (int j = l; j < r; j++) {
-        if (n[j] <= pivot) {
+        if (n[j] <= temp) {
             i++;
             swap(n[i], n[j]);
         }
@@ -66,29 +66,27 @@ int partition(vector<int> &n, int l, int r) {
     swap(n[i + 1], n[r]);
     return i + 1;
 }
-
 void qsort(vector<int> &n, int l, int r) {
     if (l >= r) return;
     int mid = partition(n, l, r);
     qsort(n, l, mid - 1);
     qsort(n, mid + 1, r);
 }
-
 void QuickSort(vector<int> &nums) {
     int len = nums.size();
     qsort(nums, 0, len - 1);
 }
 
-//O(nlogn) stable
+// O(nlogn)
 void msort(vector<int> &n, vector<int> &t, int l, int r) {
     if (r - l == 1) return;
-    int mid = l + r >> 1, tmid = l + r >> 1, tl = l, i = l;
-    msort(n, t, l, mid), mergeSort(n, t, mid, r);
+    int mid = l + r >> 1, tmid = l + r >> 1, tl = l, index = l;
+    msort(n, t, l, mid), msort(n, t, mid, r);
     while (tl < mid || tmid < r) {
         if (tmid >= r || (tl < mid && n[tl] <= n[tmid]))
-            t[i++] = n[tl++];
+            t[index++] = n[tl++];
         else
-            t[i++] = n[tmid++];
+            t[index++] = n[tmid++];
     }
     for (int i = l; i < r; i++)
         n[i] = t[i];
@@ -101,21 +99,20 @@ void MergeSort(vector<int> &nums) {
 
 //O(nlogn)
 void adjustHeap(vector<int> &n, int i, int len) {
-    int maxIndex = i;
-    if (i * 2 + 1 < len && n[i * 2 + 1] > n[maxIndex])
-        maxIndex = i * 2 + 1;
-    if (i * 2 + 2 < len && n[i * 2 + 2] > n[maxIndex])
-        maxIndex = i * 2 + 2;
-    if (maxIndex != i) {
-        swap(n[maxIndex], n[i]);
-        adjustHeap(n, maxIndex,len);
+    int index = i;
+    if (i * 2 + 1 < len && n[i * 2 + 1] > n[index])
+        index = i * 2 + 1;
+    if (i * 2 + 2 < len && n[i * 2 + 2] > n[index])
+        index = i * 2 + 2;
+    if (index != i) {
+        swap(n[index], n[i]);
+        adjustHeap(n, index, len);
     }
 }
-
 void Sort(vector<int> &nums) {
     int len = nums.size();
     for (int i = len / 2 - 1; i >= 0; i--)
-        adjustHeap(nums, i,len);
+        adjustHeap(nums, i, len);
     for (int i = len - 1; i > 0; i--) {
         swap(nums[0], nums[i]);
         adjustHeap(nums, 0, i);
