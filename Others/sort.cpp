@@ -100,10 +100,9 @@ void MergeSort(vector<int> &nums) {
 //O(nlogn)
 void adjustHeap(vector<int> &n, int i, int len) {
     int index = i;
-    if (i * 2 + 1 < len && n[i * 2 + 1] > n[index])
-        index = i * 2 + 1;
-    if (i * 2 + 2 < len && n[i * 2 + 2] > n[index])
-        index = i * 2 + 2;
+    int left = i * 2 + 1, right = i * 2 + 2;
+    if (left < len && n[left] > n[index]) index = left;
+    if (right < len && n[right] > n[index]) index = right;
     if (index != i) {
         swap(n[index], n[i]);
         adjustHeap(n, index, len);
@@ -116,5 +115,76 @@ void Sort(vector<int> &nums) {
     for (int i = len - 1; i > 0; i--) {
         swap(nums[0], nums[i]);
         adjustHeap(nums, 0, i);
+    }
+}
+
+// O(n)
+void CountingSort(vector<int> &nums) {
+    int len = nums.size();
+    if (len == 0) return;
+    int Min = nums[0], Max = nums[0];
+    for (int i = 1; i < len; i++) {
+        Max = max(Max, nums[i]);
+        Min = min(Min, nums[i]);
+    }
+    int bias = 0 - Min;
+    vector<int> bucket(Max - Min + 1, 0);
+    for (int i = 0; i < len; i++)
+        bucket[a[i] + bias]++;
+    int index = 0, i = 0;
+    while (index < len) {
+        if (bucket[i]) {
+            a[index] = i - bias;
+            bucket[i]--;
+            index++;
+        }
+        else i++;
+    }
+}
+
+// O(n)
+void bucketSort(vector<int> &nums, int bucketSize) {
+    int len = nums.size();
+    if (len < 2) sreturn;
+    int Min = nums[0], Max = nums[0];
+    for (int i = 1; i < len; i++) {
+        Max = max(Max, nums[i]);
+        Min = min(Min, nums[i]);
+    }
+    int bucketCount = (Max - Min) / bucketSize + 1;
+    vector<int> bucketArr[bucketCount];
+    for (int i = 0; i < len; i++)
+        bucketArr[(nums[i] - Min) / bucketSize].push_back(nums[i]);
+    nums.clear();
+    for (int i = 0; i < bucketCount; i++) {
+        int tlen = bucketArr[i].size();
+        sort(bucketArr[i].begin(),bucketArr[i].end());
+        for (int j = 0; j < tlen; j++)
+            nums.push_back(bucketArr[i][j]);
+    }
+}
+
+// O(n)
+void RadixSortSort(vector<int> &nums) {
+    int len = nums.size();
+    if (len < 2) return;
+    int Max = nums[0];
+    for (int i = 1; i < len; i++)
+        Max = max(Max, nums[i]);
+    int maxDigit = log10(Max) + 1;
+    int mod = 10, div = 1;
+    vector<int> bucketList[10];
+    for (int i = 0; i < maxDigit; i++, mod *= 10, div *= 10) {
+        for (int j = 0; j < len; j++) {
+            int num = (nums[j] % mod) / div;
+            bucketList[num].push_back(nums[j]);
+        }
+        int index = 0;
+        for (int j = 0; j < 10; j++) {
+            int tlen=bucketList[j].size();
+            for (int k = 0; k < tlen; k++)
+                nums[index++] = bucketList[j][k];
+            bucketList[j].clear();
+        }
     }
 }
