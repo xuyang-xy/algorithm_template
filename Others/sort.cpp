@@ -98,23 +98,23 @@ void MergeSort(vector<int> &nums) {
 }
 
 //O(nlogn)
-void adjustHeap(vector<int> &n, int i, int len) {
+void BuildHeap(vector<int> &n, int i, int len) {
     int index = i;
     int left = i * 2 + 1, right = i * 2 + 2;
     if (left < len && n[left] > n[index]) index = left;
     if (right < len && n[right] > n[index]) index = right;
     if (index != i) {
         swap(n[index], n[i]);
-        adjustHeap(n, index, len);
+        BuildHeap(n, index, len);
     }
 }
-void Sort(vector<int> &nums) {
+void HeapSort(vector<int> &nums) {
     int len = nums.size();
     for (int i = len / 2 - 1; i >= 0; i--)
-        adjustHeap(nums, i, len);
+        BuidldHeap(nums, i, len);
     for (int i = len - 1; i > 0; i--) {
         swap(nums[0], nums[i]);
-        adjustHeap(nums, 0, i);
+        BuildHeap(nums, 0, i);
     }
 }
 
