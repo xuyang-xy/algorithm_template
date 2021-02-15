@@ -114,8 +114,9 @@ void BuildHeap(vector<int> &n) {
         AdjustHeap(n, i, len);
 }
 void HeapSort(vector<int> &nums) {
+    int len = nums.size();
     BuildHeap (nums);
-    for (int i = nums.size() - 1; i > 0; i--) {
+    for (int i = len - 1; i > 0; i--) {
         swap(nums[0], nums[i]);
         AdjustHeap(nums, 0, i);
     }
