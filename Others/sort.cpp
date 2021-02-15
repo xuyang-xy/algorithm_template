@@ -97,24 +97,27 @@ void MergeSort(vector<int> &nums) {
     msort(nums, T, 0, len);
 }
 
-//O(nlogn)
-void BuildHeap(vector<int> &n, int i, int len) {
-    int index = i;
-    int left = i * 2 + 1, right = i * 2 + 2;
-    if (left < len && n[left] > n[index]) index = left;
-    if (right < len && n[right] > n[index]) index = right;
-    if (index != i) {
-        swap(n[index], n[i]);
-        BuildHeap(n, index, len);
+// O(nlogn)
+void AdjustHeap(vector<int> &n, int index, int len) {
+    int max_index = i;
+    int left = index * 2 + 1, right = index * 2 + 2;
+    if (left < len && n[left] > n[index]) max_index = left;
+    if (right < len && n[right] > n[index]) max_index = right;
+    if (index != max_index) {
+        swap(n[index], n[max_index]);
+        AdjustHeap(n, max_index, len);
     }
 }
-void HeapSort(vector<int> &nums) {
-    int len = nums.size();
+void BuildHeap(vector<int> &n) {
+    int len = n.size();
     for (int i = len / 2 - 1; i >= 0; i--)
-        BuidldHeap(nums, i, len);
-    for (int i = len - 1; i > 0; i--) {
+        AdjustHeap(n, i, len);
+}
+void HeapSort(vector<int> &nums) {
+    BuildHeap (nums);
+    for (int i = nums.size() - 1; i > 0; i--) {
         swap(nums[0], nums[i]);
-        BuildHeap(nums, 0, i);
+        AdjustHeap(nums, 0, i);
     }
 }
 
@@ -143,7 +146,7 @@ void CountingSort(vector<int> &nums) {
 }
 
 // O(n)
-void bucketSort(vector<int> &nums, int bucketSize) {
+void BucketSort(vector<int> &nums, int bucketSize) {
     int len = nums.size();
     if (len < 2) sreturn;
     int Min = nums[0], Max = nums[0];
