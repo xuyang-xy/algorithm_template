@@ -1,3 +1,4 @@
+// 构造最长回文串
 int longestPalindrome(string s) {
     map<char, int> M;
     map<char, int>::iterator item;
@@ -20,6 +21,7 @@ int longestPalindrome(string s) {
     return ans + flag;
 }
 
+// 最大回文子串
 string longestPalindrome(string s) {
     int len = s.length();
     if (len <= 1) return s;
@@ -46,6 +48,7 @@ string longestPalindrome(string s) {
     return res;
 }
 
+// 最大回文子序列
 int longestPalindromeSubseq(string s) {
     int len = s.length();
     if (len <= 1) return len;
@@ -63,6 +66,7 @@ int longestPalindromeSubseq(string s) {
     return dp[0][len - 1];
 }
 
+// 最大无重复子串
 int lengthOfLongestSubstring(string s) {
     int len = s.length();
     if (len <= 1) return len;
@@ -85,6 +89,31 @@ int lengthOfLongestSubstring(string s) {
     return ans;
 }
 
+// 最大重复子串
+bool search(string& S, int len){
+    unordered_set<string> st;
+    for(int i = 0; i < S.size(); i++) {
+        string temp = S.substr(i,len);
+        if (st.count(temp)) return true;
+        else st.insert(temp);
+    }
+    return false;
+}
+int longestRepeatingSubstring(string S) {
+    int len = S.length();
+    int l = 1, r = len, ans = 0;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (search(S, mid)) {
+            l = mid + 1;
+            ans = max(ans, mid);
+        }
+        else r = mid - 1;
+    }
+    return ans;
+}
+
+// 最大子串和
 int maxSubArray(vector<int>& nums) {
     int len = nums.size();
     const int maxn = 3e4 + 5;
@@ -99,6 +128,7 @@ int maxSubArray(vector<int>& nums) {
     return ans;
 }
 
+// 最长上升子序列
 int lengthOfLIS(vector<int>& nums) {
     int len = nums.size();
     if (len <= 1) return len;
@@ -118,6 +148,7 @@ int lengthOfLIS(vector<int>& nums) {
     return ans;
 }
 
+// 最大公共子序列
 int longestCommonSubsequence(string text1, string text2) {
     int len1 = text1.length();
     int len2 = text2.length();
