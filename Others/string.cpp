@@ -156,27 +156,11 @@ int longestCommonSubsequence(string text1, string text2) {
     const int maxn = 1005;
     int dp[maxn][maxn];
     memset(dp, 0, sizeof(dp));
-    int flag = 0;
-    for (int i = 0; i < len2; i++) {
-        if (flag) dp[0][i] = 1;
-        else if (text2[i] == text1[0]) {
-            flag = 1;
-            dp[0][i] = 1;
-        }
-    }
-    flag = 0;
-    for (int i = 0; i < len1; i++) {
-        if (flag) dp[i][0] = 1;
-        else if (text1[i] == text2[0]) {
-            flag = 1;
-            dp[i][0] = 1;
-        }
-    }
-    for (int i = 1; i < len1; i++) {
-        for (int j = 1; j < len2; j++) {
-            if (text1[i] == text2[j]) dp[i][j] = dp[i - 1][j - 1] + 1;
+    for (int i = 1; i <= len1; i++) {
+        for (int j = 1; j <= len2; j++) {
+            if (text1[i - 1] == text2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
             else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
         }
     }
-    return dp[len1 - 1][len2 - 1];
+    return dp[len1][len2];
 }
