@@ -36,3 +36,16 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
     }
     return a;
 }
+
+bool hasCycle(ListNode *head) {
+    if (!head || !head->next) return false;
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast) {
+        slow = slow->next;
+        if (fast->next) fast = fast->next->next;
+        else return false;
+        if (slow == fast) return true;
+    }
+    return false;
+}
