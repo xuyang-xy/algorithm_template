@@ -164,3 +164,20 @@ int longestCommonSubsequence(string text1, string text2) {
     }
     return dp[len1][len2];
 }
+
+string addStrings(string num1, string num2) {
+    int len1 = num1.length();
+    int len2 = num2.length();
+    int flag = 0;
+    string ans = "";
+    for (int i = 1; i <= len1 || i <= len2; i++) {
+        int add1 = i <= len1 ? int(num1[len1 - i] - '0') : 0;
+        int add2 = i <= len2 ? int(num2[len2 - i] - '0') : 0;
+        int add_num = (flag + add1 + add2) % 10;
+        flag = (flag + add1 + add2) / 10;
+        ans += ('0' + add_num);
+    }
+    if (flag) ans += '1';
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
