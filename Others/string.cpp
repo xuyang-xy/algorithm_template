@@ -181,3 +181,30 @@ string addStrings(string num1, string num2) {
     reverse(ans.begin(), ans.end());
     return ans;
 }
+
+string minWindow(string s, string t) {
+    int slen = s.length();
+    int tlen = t.length();
+    string ans = "";
+    if (slen < tlen) return "";
+    int L = 0, R = 0, cnt = 0, minLen = slen;
+    map<char, int> scnt, tcnt;
+    for (int i = 0; i < tlen; i++) tcnt[t[i]]++;
+    while (R < slen) {
+        char r = s[R];
+        scnt[r] += 1;
+        if (tcnt.count(r) && scnt[r] <= tcnt[r]) cnt++;
+        while (L <= R && cnt == tlen) {
+            if (minLen >= R - L + 1) {
+                minLen = R - L + 1;
+                ans = s.substr(L, minLen);
+            }
+            char l = s[L];
+            scnt[l] -= 1;
+            if (tcnt.count(l) && scnt[l] < tcnt[l]) cnt -= 1;
+            L++;
+        }
+        R++;
+    }
+    return ans;
+}
