@@ -183,28 +183,29 @@ string addStrings(string num1, string num2) {
 }
 
 string minWindow(string s, string t) {
+    string ans = "";
     int slen = s.length();
     int tlen = t.length();
-    string ans = "";
-    if (slen < tlen) return "";
-    int L = 0, R = 0, cnt = 0, minLen = slen;
+    if (slen == 0 || tlen == 0) return ans;
+    int l = 0, r = 0, ans_len = slen + 1;
+    int cnt = 0;
     map<char, int> scnt, tcnt;
     for (int i = 0; i < tlen; i++) tcnt[t[i]]++;
-    while (R < slen) {
-        char r = s[R];
-        scnt[r] += 1;
-        if (tcnt.count(r) && scnt[r] <= tcnt[r]) cnt++;
-        while (L <= R && cnt == tlen) {
-            if (minLen >= R - L + 1) {
-                minLen = R - L + 1;
-                ans = s.substr(L, minLen);
+    while (r < slen) {
+        char temp_r = s[r];
+        scnt[temp_r]++;
+        if (tcnt.count(temp_r) && scnt[temp_r] <= tcnt[temp_r]) cnt++;
+        while (l <= r && cnt == tlen) {
+            if (r - l + 1 < ans_len) {
+                ans_len = r - l + 1;
+                ans = s.substr(l, ans_len);
             }
-            char l = s[L];
-            scnt[l] -= 1;
-            if (tcnt.count(l) && scnt[l] < tcnt[l]) cnt -= 1;
-            L++;
+            char temp_l = s[l];
+            scnt[temp_l]--;
+            if (tcnt.count(temp_l) && scnt[temp_l] < tcnt[temp_l]) cnt--;
+            l++;
         }
-        R++;
+        r++;
     }
     return ans;
 }
