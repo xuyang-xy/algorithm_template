@@ -77,3 +77,53 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
     return (k1_num + k2_num) / 2.0;
 }
 
+
+int getnext(int num) {
+    int res = 0;
+    int temp = num;
+    while (temp) {
+        res += (temp % 10) * (temp% 10);
+        temp /= 10;
+    }
+    return res;
+}
+bool isHappy(int n) {
+    int slow = n;
+    int fast = getnext(n);
+    while (fast != 1 && fast != slow) {
+        slow = getnext(slow);
+        fast = getnext(getnext(fast));
+    }
+    return fast == 1;
+}
+
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
+int m, n;
+int dfs(vector<vector<int>>& grid, int x, int y) {
+    if (x < 0 || x >= m || y < 0 || y >= n) return 0;
+    if (grid[x][y]) return 1;
+    if (grid[x][y] == 0)
+        grid[x][y] = 1;
+    int ret = 1;
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        ret *= dfs(grid, nx, ny);
+    }
+    return ret;
+}
+int closedIsland(vector<vector<int>>& grid) {
+    m = grid.size();
+    n = grid[0].size();
+    int ans = 0;
+    if (m == 0) return ans;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == 0)
+                if (dfs(grid, i, j)) ans++;
+        }
+    }
+    return ans;
+}
+
