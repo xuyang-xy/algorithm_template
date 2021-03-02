@@ -127,3 +127,30 @@ int closedIsland(vector<vector<int>>& grid) {
     return ans;
 }
 
+void dfs (int index, int len, string t, string d, map<char, string>& m, vector<string>& res) {
+    if (index == len) {
+        res.push_back(t);
+        return;
+    }
+    for (int i = 0; i < m[d[index]].length(); i++) {
+        string nt = t + m[d[index]][i];
+        dfs(index + 1, len, nt, d, m, res);
+    }
+}
+vector<string> letterCombinations(string digits) {
+    vector<string> res;
+    int len = digits.length();
+    if (len == 0) return res;
+    map<char, string> M{
+        {'2', "abc"},
+        {'3', "def"},
+        {'4', "ghi"},
+        {'5', "jkl"},
+        {'6', "mno"},
+        {'7', "pqrs"},
+        {'8', "tuv"},
+        {'9', "wxyz"}
+    };
+    dfs(0, len, "", digits, M, res);
+    return res;
+}
