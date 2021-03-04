@@ -185,3 +185,23 @@ int findKthLargest(vector<int>& nums, int k) {
     srand(time(0));
     return quickSelect(nums, 0, nums.size() - 1, nums.size() - k);
 }
+
+vector<int> smallestK(vector<int>& arr, int k) {
+    vector<int> res;
+    int len = arr.size();
+    if (len == 0) return res;
+    priority_queue<int> Q;
+    for (int i= 0; i < k; i++) Q.push(arr[i]);
+    for (int i = k; i < len; i++) {
+        if (arr[i] < Q.top()) {
+            Q.pop();
+            Q.push(arr[i]);
+        }
+    }
+    for(int i = 0; i < k; i++) {
+        res.push_back(Q.top());
+        Q.pop();
+    }
+    return res;
+}
+
