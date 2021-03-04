@@ -205,3 +205,26 @@ vector<int> smallestK(vector<int>& arr, int k) {
     return res;
 }
 
+int div(vector<int>& n, int l, int r) {
+    int flag = n[r];
+    int i = l - 1;
+    for (int j = l; j < r; j++) {
+        if (n[j] < flag) {
+            i++;
+            swap(n[i], n[j]);
+        }
+    }
+    swap(n[i + 1], n[r]);
+    return i + 1;
+}
+int findkth(vector<int>& n, int l, int r, int index) {
+    int f = div(n, l, r);
+    if (f == index) return n[index];
+    else if (f < index) return findkth(n, f + 1, r, index);
+    else return findkth(n, l, f - 1, index);
+}
+int findKthLargest(vector<int>& nums, int k) {
+    int len = nums.size();
+    int res = findkth(nums, 0, len - 1, len - k);
+    return res;
+}
