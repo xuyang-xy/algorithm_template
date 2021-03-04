@@ -228,3 +228,22 @@ int findKthLargest(vector<int>& nums, int k) {
     int res = findkth(nums, 0, len - 1, len - k);
     return res;
 }
+
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
+    vector<int> res;
+    int left = 0, right = matrix[0].size() - 1, up = 0, down = matrix.size() - 1;
+    if (right < 0 || down < 0) return res;
+    while (left <= right && up <= down) {
+        for (int i = left; i <= right; i++) res.push_back(matrix[up][i]);
+        for (int i = up + 1; i <= down; i++) res.push_back(matrix[i][right]);
+        if (left < right && up < down) {
+            for (int i = right - 1; i >= left; i--) res.push_back(matrix[down][i]);
+            for (int i = down - 1; i >= up + 1; i--) res.push_back(matrix[i][left]);
+        }
+        left++;
+        right--;
+        up++;
+        down--;
+    }
+    return res;
+}
