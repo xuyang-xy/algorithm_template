@@ -4,18 +4,55 @@ void preorder(vector<int>& res, TreeNode* n) {
     preorder(res, n->left);
     preorder(res, n->right);
 }
+vector<int> preorderTraversal(TreeNode* n) {
+    vector<int> res;
+    stack<TreeNode*> s;
+    s.push(n);
+    while (!s.empty()) {
+        TreeNode* temp = s.top();
+        res.push_back(temp->val);
+        s.pop();
+        if (temp->left) s.push(temp->left);
+        if (temp->right) s.push(temp->right);
+    }
+    return res;
+}
+
 void inorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     inorder(res, n->left);
     res.push_back(n->val);
     inorder(res, n->right);
 }
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    stack<TreeNode*> s;
+    TreeNode* n = root;
+    while(n != nullptr || !s.empty()) {
+        if (n != nullptr) {
+            s.push(n);
+            n = n->left;
+        }
+        else {
+            n = s.top();
+            s.pop();
+            res.push_back(n->val);
+            n = n->right;
+       }
+    }
+    return res;
+}
+
 void postorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     postorder(res, n->left);
     postorder(res, n->right);
     res.push_back(n->val);
 }
+
+
+
+
 vector<vector<int>> levelOrder(TreeNode* root) {
     vector<vector<int>> res;
     if (!root) return res;
