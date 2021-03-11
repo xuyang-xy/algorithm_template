@@ -12,8 +12,8 @@ vector<int> preorderTraversal(TreeNode* n) {
         TreeNode* temp = s.top();
         res.push_back(temp->val);
         s.pop();
-        if (temp->left) s.push(temp->left);
         if (temp->right) s.push(temp->right);
+        if (temp->left) s.push(temp->left);
     }
     return res;
 }
@@ -35,8 +35,8 @@ vector<int> inorderTraversal(TreeNode* root) {
         }
         else {
             n = s.top();
-            s.pop();
             res.push_back(n->val);
+            s.pop();
             n = n->right;
        }
     }
@@ -49,9 +49,25 @@ void postorder(vector<int>& res, TreeNode* n) {
     postorder(res, n->right);
     res.push_back(n->val);
 }
-
-
-
+vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root) return res;
+    stack<TreeNode*> s, output;
+    TreeNode* n = root;
+    s.push(n);
+    while (!s.empty()) {
+        TreeNode* temp = s.top();
+        output.push(temp);
+        s.pop();
+        if (temp->left) s.push(temp->left);
+        if (temp->right) s.push(temp->right);
+    }
+    while (!output.empty()) {
+        res.push_back(output.top()->val);
+        output.pop();
+    }
+    return res;
+}
 
 vector<vector<int>> levelOrder(TreeNode* root) {
     vector<vector<int>> res;
