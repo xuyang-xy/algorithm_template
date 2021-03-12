@@ -247,3 +247,37 @@ vector<int> spiralOrder(vector<vector<int>>& matrix) {
     }
     return res;
 }
+
+int maxArea(vector<int>& height) {
+    int ans = -1;
+    int len = height.size();
+    int l = 0, r = len - 1;
+    while (l < r) {
+        int temp = (r - l) * min(height[l], height[r]);
+        ans = max(ans, temp);
+        if (height[l] < height[r]) l++;
+        else r--;
+    }
+    return ans;
+}
+
+void nextPermutation(vector<int>& nums) {
+    int len = nums.size();
+    int l, r;
+    for (int i = len - 2; i >= 0; i--) {
+        if (nums[i] < nums[i + 1]) {
+            l = i;
+            break;
+        }
+    }
+    if (l >= 0) {
+        for (int i = len - 1; i > l; i--) {
+            if (nums[i] > nums[l]) {
+                r = i;
+                break;
+            }
+        }
+        swap(nums[l], nums[r]);
+    }
+    reverse(nums.begin() + l + 1, nums.end());
+}
