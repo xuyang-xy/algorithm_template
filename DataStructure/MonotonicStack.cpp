@@ -26,9 +26,9 @@ string removeKdigits(string num, int k) {
         if (s.empty() && num[i] == '0') continue;
         s.push(num[i]);
     }
-    while (k) {
-        s.pop();
+    while (!s.empty() && k) {
         k--;
+        s.pop();
     }
     if (s.empty()) return "0";
     while (!s.empty()) {
