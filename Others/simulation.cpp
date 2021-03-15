@@ -1,3 +1,8 @@
+/*
+001. 两数之和
+利用map以O(1)进行查询，时间复杂度O(n) 空间复杂度O(n)
+朴素的双重循环时间复杂度O(n^2) 空间复杂度O(1)
+*/
 vector<int> twoSum(vector<int>& nums, int target) {
     vector<int> res;
     int len = nums.size();
