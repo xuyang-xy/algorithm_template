@@ -1,3 +1,22 @@
+vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> res;
+    int len = nums.size();
+    if (len == 0) return res;
+    map<int, int> m;
+    for (int i = 0; i < len; i++) {
+        if (m.count(nums[i]) == 0) {
+            m[nums[i]] = i;
+        }
+    }
+    for (int i = 0; i < len; i++) {
+        if (m.count(target - nums[i]) && m[target - nums[i]] != i) {
+            res = {i, m[target - nums[i]]};
+            break;
+        }
+    }
+    return res;
+}
+
 vector<int> smallestK(vector<int>& arr, int k) {
     vector<int> res;
     if (k == 0) return res;
