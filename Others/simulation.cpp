@@ -21,6 +21,36 @@ vector<int> twoSum(vector<int>& nums, int target) {
     }
     return res;
 }
+/*
+015. 三数之和
+固定一个数后用双指针遍历右端元素 时间复杂度O(n^2)
+朴素三重循环时间复杂度O(n^3)
+*/
+vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> res;
+    int len = nums.size();
+    if (len == 0) return res;
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < len; i++) {
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        if (nums[i] > 0) break;
+        int l = i + 1;
+        int r = len - 1;
+        while (l < r) {
+            int temp = nums[i] + nums[l] + nums[r];
+            if (temp == 0) {
+                res.push_back({nums[i], nums[l], nums[r]});
+                while (l + 1 < r && nums[l] == nums[l + 1]) l++;
+                while (r - 1 > l && nums[r] == nums[r - 1]) r--;
+                l++;
+                r--;
+            }
+            else if (temp < 0) l++;
+            else r--;
+        }
+    }
+    return res;
+}
 
 vector<int> smallestK(vector<int>& arr, int k) {
     vector<int> res;
