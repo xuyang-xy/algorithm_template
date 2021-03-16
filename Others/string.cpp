@@ -147,6 +147,36 @@ int lengthOfLIS(vector<int>& nums) {
     }
     return ans;
 }
+vector<int> lengthOfLIS(vector<int>& nums) {
+    vector<int> res;
+    int len = nums.size();
+    if (len <= 1) return len;
+    const int maxn = 2505;
+    int dp[maxn], pre[maxn];
+    memset(dp, 0, sizeof(dp));
+    memset(pre, -1, sizeof(pre));
+    dp[0] = 1;
+    int ans = 1, index = 0;
+    for (int i = 1; i < len; i++) {
+        dp[i] = 1;
+        for (int j = 0; j < i; j++) {
+            if (nums[j] < nums[i] && dp[j] + 1 > dp[i]) {
+                dp[i] = dp[j] + 1;
+                pre[i] = j;
+            }
+        }
+        if (dp[i] > ans) {
+            ans = dp[i];
+            index = i;
+        }
+    }
+    while (index >= 0) {
+        res.push_back(index);
+        index = pre[index];
+    }
+    res.reverse(res.begin(), res.end());
+    return res;
+}
 
 // 最大公共子序列
 int longestCommonSubsequence(string text1, string text2) {
