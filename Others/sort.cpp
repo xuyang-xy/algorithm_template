@@ -1,3 +1,35 @@
+/*
+快速排序 时间复杂度 O(nlogn)
+*/
+int div(vector<int>& nums, int l, int r) {
+    int flag = nums[r];
+    int i = l - 1;
+    for (int j = l; j < r; j++) {
+        if (nums[j] < flag) {
+            i++;
+            swap(nums[i], nums[j]);
+        }
+    }
+    swap(nums[i + 1], nums[r]);
+    return i + 1;
+}
+void qsort(vector<int>& nums, int l, int r) {
+    int mid = div(nums, l, r);
+    qsort(nums, l, mid - 1);
+    qsort(nums, mid + 1, r);
+}
+void sort(vector<int>& nums) {
+    int len = nums.size();
+    qsort(nums, 0, len - 1);
+}
+
+
+
+
+
+
+
+
 // O(n^2)
 void BubbleSort(vector<int> &nums) {
     int len = nums.size();
