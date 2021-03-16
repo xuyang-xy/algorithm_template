@@ -180,19 +180,26 @@ int numTrees(int n) {
     return dp[n];
 }
 
-bool dfs(TreeNode* a, TreeNode* b) {
-    if (!a) return false;
-    if (check(a, b)) return true;
-    else return (dfs(a->left, b) || dfs(a->right, b));
-}
 bool check(TreeNode* a, TreeNode* b) {
     if (!b) return true;
     if (!a) return false;
     if (a->val != b->val) return false;
     return (check(a->left, b->left) && check(a->right, b->right));
 }
+bool dfs(TreeNode* a, TreeNode* b) {
+    if (!a) return false;
+    if (check(a, b)) return true;
+    else return (dfs(a->left, b) || dfs(a->right, b));
+}
 bool isSubStructure(TreeNode* A, TreeNode* B) {
     if (!A || !B) return false;
     bool res = dfs(A, B);
     return res;
+}
+
+bool hasPathSum(TreeNode* root, int targetSum) {
+    if (!root) return false;
+    if (!root->left && !root->right) return targetSum == root->val;
+    return hasPathSum(root->left, targetSum - root->val) ||
+           hasPathSum(root->right, targetSum - root->val);
 }
