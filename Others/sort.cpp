@@ -1,5 +1,6 @@
 /*
 快速排序 时间复杂度 O(nlogn)
+最坏情况 O(n^2) 将升/降序数组排序为降/升序
 */
 int div(vector<int>& nums, int l, int r) {
     int flag = nums[r];
@@ -14,6 +15,7 @@ int div(vector<int>& nums, int l, int r) {
     return i + 1;
 }
 void qsort(vector<int>& nums, int l, int r) {
+    if (l >= r) return;
     int mid = div(nums, l, r);
     qsort(nums, l, mid - 1);
     qsort(nums, mid + 1, r);
