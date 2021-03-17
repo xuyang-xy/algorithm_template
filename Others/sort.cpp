@@ -53,6 +53,39 @@ void sort(vector<int>& nums) {
     }
 }
 
+/*
+归并排序 时间复杂度O(nlogn)
+最好，最坏，平均都是O(nlogn);
+*/
+void merge(vector<int>& n, vector<int>& t, int l, int mid, int r) {
+    int i = l, j = mid + 1, index = 0;
+    while(i <= mid && j <= r) {
+        if (n[i] <= n[j]) t[index++] = n[i++];
+        else t[index++] = n[j++];
+    }
+    while (i <= mid) t[index++] = n[i++];
+    while (j <= right) t[index++] = n[j++];
+    index = 0;
+    while(l <= r) n[l++] = t[inedx++];
+}
+void msort(vector<int>& n, vector<int>& t, int l, int r) {
+    if (l >= r) return;
+    int mid = l + (r - l) / 2;
+    msort(n, t, l, mid), msort(n, t, mid + 1, r);
+    merge(n, t, l, mid, r);
+}
+
+void MergeSort(vector<int>& nums) {
+    int len = nums.size();
+    vector<int> T(len);
+    msort(nums, T, 0, len);
+}
+
+
+
+
+
+
 // O(n^2)
 void BubbleSort(vector<int> &nums) {
     int len = nums.size();
@@ -109,25 +142,6 @@ void ShellSort(vector<int> &nums) {
     }
 }
 
-// O(nlogn)
-void msort(vector<int> &n, vector<int> &t, int l, int r) {
-    if (r - l == 1) return;
-    int mid = l + r >> 1, tmid = l + r >> 1, tl = l, index = l;
-    msort(n, t, l, mid), msort(n, t, mid, r);
-    while (tl < mid || tmid < r) {
-        if (tmid >= r || (tl < mid && n[tl] <= n[tmid]))
-            t[index++] = n[tl++];
-        else
-            t[index++] = n[tmid++];
-    }
-    for (int i = l; i < r; i++)
-        n[i] = t[i];
-}
-void MergeSort(vector<int> &nums) {
-    int len = nums.size();
-    vector<int> T(len);
-    msort(nums, T, 0, len);
-}
 
 // O(nlogn)
 void AdjustHeap(vector<int> &n, int index, int len) {
