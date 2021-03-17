@@ -1,6 +1,7 @@
 /*
 快速排序 时间复杂度 O(nlogn)
 最坏情况 O(n^2) 将升/降序数组排序为降/升序
+相关题目： 求第k大
 */
 int div(vector<int>& nums, int l, int r) {
     int flag = nums[r];
@@ -27,6 +28,7 @@ void sort(vector<int>& nums) {
 /*
 堆排序 时间复杂度O(nlogn)
 升序排序，基于大顶堆Key[i] >= Key[2i+1] && key >= key[2i+2]
+相关题目：topk， 数据流中位数
 */
 void AdjustHeap(vector<int>& nums, int root, int len) {
     int temp = root;
@@ -56,6 +58,7 @@ void sort(vector<int>& nums) {
 /*
 归并排序 时间复杂度O(nlogn)
 最好，最坏，平均都是O(nlogn);
+相关题目：逆序对
 */
 void merge(vector<int>& n, vector<int>& t, int l, int mid, int r) {
     int i = l, j = mid + 1, index = 0;
@@ -80,11 +83,6 @@ void MergeSort(vector<int>& nums) {
     vector<int> T(len);
     msort(nums, T, 0, len);
 }
-
-
-
-
-
 
 // O(n^2)
 void BubbleSort(vector<int> &nums) {
@@ -139,32 +137,6 @@ void ShellSort(vector<int> &nums) {
                 nums[pre_index + step] = temp;
             }
         }
-    }
-}
-
-
-// O(nlogn)
-void AdjustHeap(vector<int> &n, int index, int len) {
-    int max_index = i;
-    int left = index * 2 + 1, right = index * 2 + 2;
-    if (left < len && n[left] > n[index]) max_index = left;
-    if (right < len && n[right] > n[index]) max_index = right;
-    if (index != max_index) {
-        swap(n[index], n[max_index]);
-        AdjustHeap(n, max_index, len);
-    }
-}
-void BuildHeap(vector<int> &n) {
-    int len = n.size();
-    for (int i = len / 2 - 1; i >= 0; i--)
-        AdjustHeap(n, i, len);
-}
-void HeapSort(vector<int> &nums) {
-    int len = nums.size();
-    BuildHeap (nums);
-    for (int i = len - 1; i > 0; i--) {
-        swap(nums[0], nums[i]);
-        AdjustHeap(nums, 0, i);
     }
 }
 
