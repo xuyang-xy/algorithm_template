@@ -25,13 +25,6 @@ void sort(vector<int>& nums) {
     qsort(nums, 0, len - 1);
 }
 
-
-
-
-
-
-
-
 // O(n^2)
 void BubbleSort(vector<int> &nums) {
     int len = nums.size();
