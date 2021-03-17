@@ -54,7 +54,6 @@ void sort(vector<int>& nums) {
         AdjustHeap(nums, 0, i);
     }
 }
-
 /*
 归并排序 时间复杂度O(nlogn)
 最好，最坏，平均都是O(nlogn);
@@ -77,7 +76,6 @@ void msort(vector<int>& n, vector<int>& t, int l, int r) {
     msort(n, t, l, mid), msort(n, t, mid + 1, r);
     merge(n, t, l, mid, r);
 }
-
 void MergeSort(vector<int>& nums) {
     int len = nums.size();
     vector<int> T(len);
@@ -94,7 +92,6 @@ void BubbleSort(vector<int> &nums) {
         }
     }
 }
-
 
 // O(n^2)
 void SelectionSort(vector<int> &nums) {
