@@ -24,6 +24,34 @@ void sort(vector<int>& nums) {
     int len = nums.size();
     qsort(nums, 0, len - 1);
 }
+/*
+堆排序 时间复杂度O(nlogn)
+升序排序，基于大顶堆Key[i] >= Key[2i+1] && key >= key[2i+2]
+*/
+void AdjustHeap(vector<int>& nums, int root, int len) {
+    int temp = root;
+    int left = root * 2 + 1, right = root * 2 + 2;
+    if (left < len && nums[left] > nums[temp]) temp = left;
+    if (right < len && nums[right] > nums[temp]) temp = right;
+    if (temp != root) {
+        swap(nums[temp], nums[root]);
+        AdjustHeap(nums, temp, len);
+    }
+}
+void BuildHeap(vector<int>& nums) {
+    int len = nums.size();
+    for (int i = len / 2 - 1; i >= 0; i--) {
+        AdjustHeap(nums, i, len);
+    }
+}
+void sort(vector<int>& nums) {
+    int len = nums.length();
+    BuildHeap(nums);
+    for (int i = len - 1; i >= 0; i--) {
+        swap(nums[0], nums[i]);
+        AdjustHeap(nums, 0, i);
+    }
+}
 
 // O(n^2)
 void BubbleSort(vector<int> &nums) {
@@ -35,6 +63,7 @@ void BubbleSort(vector<int> &nums) {
         }
     }
 }
+
 
 // O(n^2)
 void SelectionSort(vector<int> &nums) {
@@ -78,30 +107,6 @@ void ShellSort(vector<int> &nums) {
             }
         }
     }
-}
-
-// O(nlogn)
-int partition(vector<int> &n, int l, int r) {
-    int temp = n[r];
-    int i = l - 1;
-    for (int j = l; j < r; j++) {
-        if (n[j] <= temp) {
-            i++;
-            swap(n[i], n[j]);
-        }
-    }
-    swap(n[i + 1], n[r]);
-    return i + 1;
-}
-void qsort(vector<int> &n, int l, int r) {
-    if (l >= r) return;
-    int mid = partition(n, l, r);
-    qsort(n, l, mid - 1);
-    qsort(n, mid + 1, r);
-}
-void QuickSort(vector<int> &nums) {
-    int len = nums.size();
-    qsort(nums, 0, len - 1);
 }
 
 // O(nlogn)
