@@ -52,8 +52,60 @@ vector<vector<int>> threeSum(vector<int>& nums) {
     return res;
 }
 /*
-
+215. 数组中第K大
+01. 基于快排划分的分治 最坏O(n^2) 期望为O(n)
+02. 基于大根堆，删去K- 1 次堆顶 O(nlogn)
 */
+int div(vector<int>& nums, int l ,int r) {
+    int i = l - 1;
+    int flag = nums[r];
+    for (int j = l; j < r; j++) {
+        if (nums[j] < flag) {
+            i++;
+            swap(nums[i], nums[j]);
+        }
+    }
+    swap(nums[i + 1], nums[r]);
+    return i + 1;
+}
+int findKth(vector<int>& nums, int l ,int r, int index) {
+    int mid = div(nums, l, r);
+    if (mid == index) return nums[mid];
+    else if (mid < index) return findKth(nums, mid + 1, r, index);
+    else return findKth(nums, l, mid - 1, index);
+}
+int findKthLargest(vector<int>& nums, int k) {
+    int len = nums.size();
+    int kth = len - k;
+    int res = findKth(nums, 0, len - 1, kth);
+    return res;
+}
+void AdjustHeap(vector<int>& nums, int root, int len) {
+    int temp = root;
+    int left = temp * 2 + 1, right = temp * 2 + 2;
+    if (left < len && nums[temp] < nums[left]) temp = left;
+    if (right < len && nums[temp] < nums[right]) temp = right;
+    if (temp != root) {
+        swap(nums[temp], nums[root]);
+        AdjustHeap(nums, temp, len);
+    }
+}
+void BuildHeap(vector<int>&nums, int len) {
+    for (int i = len / 2 - 1; i >= 0; i--)
+        AdjustHeap(nums, i, len);
+}
+int findKthLargest(vector<int>& nums, int k) {
+    int len = nums.size();
+    BuildHeap(nums, len);
+    for (int i = 0; i < k - 1; i++) {
+        swap(nums[0], nums[len - 1 - i]);
+        AdjustHeap(nums, 0, len - 1 - i);
+    }
+    return nums[0];
+}
+
+
+
 vector<int> smallestK(vector<int>& arr, int k) {
     vector<int> res;
     if (k == 0) return res;
