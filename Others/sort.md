@@ -6,7 +6,6 @@
 05. C++的API中, 优先队列priority_queue 默认为大顶堆
     ----
     升序队列 priority_queue <int,vector<int>,greater<int> > q
-    
     降序队列 priority_queue <int,vector<int>,less<int> >q
     ----
 06. 
