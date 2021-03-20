@@ -4,6 +4,9 @@
 相关题目： 求第k大
 */
 int div(vector<int>& nums, int l, int r) {
+    /*
+    plain div
+    */
     int flag = nums[r];
     int i = l - 1;
     for (int j = l; j < r; j++) {
@@ -15,11 +18,59 @@ int div(vector<int>& nums, int l, int r) {
     swap(nums[i + 1], nums[r]);
     return i + 1;
 }
+int div(vector<int>& nums, int l, int r) {
+    /*
+    two-way div
+    */
+    int temp = rand() % (r - l + 1) + l;
+    swap(nums[temp], nums[r]);
+    int flag = nums[r];
+    int i = l, j = r - 1;
+    while (true) {
+        while (i < r && nums[i] < flag) i++;
+        while (j >= l && nums[j] > flag) j--;
+        if (i >= j) break;
+        swap(nums[i], nums[j]);
+        i++;
+        j--;
+    }
+    swap(nums[r], num[i]);
+    return i;
+}
 void qsort(vector<int>& nums, int l, int r) {
+    /*
+    one-two-way div
+    */
     if (l >= r) return;
     int mid = div(nums, l, r);
     qsort(nums, l, mid - 1);
     qsort(nums, mid + 1, r);
+}
+void qsort(vector<int>& nums, int l, int r) {
+    /*
+    three-way qsort
+    */
+    if (l >= r) return;
+    int temp = rand() % (r - l + 1) + l;
+    swap(nums[temp], nums[r]);
+    int flag = nums[r];
+    int lt = l - 1, gt = r, i = l;
+    while (i < gt) {
+        if (nums[i] < flag) {
+            swap(nums[i], nums[lt + 1]);
+            lt++;
+            i++;
+        }
+        else if (nums[i] > flag) {
+            swap(nums[i], nums[gt - 1]);
+            gt--;
+            i++;
+        }
+        else i++;
+    }
+    swap(nums[r], num[gt]);//[l, lt] [lt+1, gt] [gt + 1, r]
+    qsort(nums, l, lt);
+    qsort(nums, gt + 1, r);
 }
 void sort(vector<int>& nums) {
     int len = nums.size();
