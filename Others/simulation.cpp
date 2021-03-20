@@ -416,3 +416,18 @@ string decodeString(string s) {
     }
     return res;
 }
+
+static int cmp (string a, string b) {
+    return a + b < b + a;
+}
+string minNumber(vector<int>& nums) {
+    int len = nums.size();
+    vector<string> strs;
+    string res;
+    for (int i = 0; i < len; i++) 
+        strs.push_back(to_string(nums[i]));
+    sort(strs.begin(), strs.end(), cmp);
+    for (int i = 0; i < len; i++)
+        res += strs[i];
+    return res;
+}
