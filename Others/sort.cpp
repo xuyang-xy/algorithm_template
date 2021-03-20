@@ -64,7 +64,6 @@ void qsort(vector<int>& nums, int l, int r) {
         else if (nums[i] > flag) {
             swap(nums[i], nums[gt - 1]);
             gt--;
-            i++;
         }
         else i++;
     }
