@@ -77,6 +77,10 @@ void sort(vector<int>& nums) {
     qsort(nums, 0, len - 1);
 }
 
+/*
+leetcode 75 颜色分类
+基于三路划分实现 一次遍历 O(n)
+*/
 void sort(vector<int>& nums, int l, int r) {
     if (l >= r) return;
     int lt = l - 1;
