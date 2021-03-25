@@ -22,7 +22,20 @@ TreeNode* invertTree(TreeNode* root) {
     }
     return root;
 }
-
+/*
+二叉树上下翻转
+*/
+TreeNode* upsideDownBinaryTree(TreeNode* root) {
+    if (!root || !root->left) return root;
+    TreeNode* l = root->left;
+    TreeNode* r = root->right;
+    TreeNode* nroot = upsideDownBinaryTree(l);
+    l->left = r;
+    l->right = root;
+    root->left = nullptr;
+    root->right = nullptr;
+    return nroot;
+}
 
 
 void preorder(vector<int>& res, TreeNode* n) {
