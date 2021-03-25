@@ -1,3 +1,30 @@
+/*
+二叉树翻转 递归非递归 O(n)
+*/
+TreeNode* invertTree(TreeNode* root) {
+    if (!root) return nullptr;
+    TreeNode* nleft = invertTree(root->left);
+    TreeNode* nright = invertTree(root->right);
+    root->left = nright;
+    root->right = nleft;
+    return root;
+}
+TreeNode* invertTree(TreeNode* root) {
+    if(!root) return nullptr;
+    queue<TreeNode*> Q;
+    Q.push(root);
+    while(!Q.empty()) {
+        TreeNode* temp = Q.front();
+        Q.pop();
+        swap(temp->left, temp->right);
+        if (temp->left) Q.push(temp->left);
+        if (temp->right) Q.push(temp->right);
+    }
+    return root;
+}
+
+
+
 void preorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     res.push_back(n->val);
