@@ -431,3 +431,38 @@ string minNumber(vector<int>& nums) {
         res += strs[i];
     return res;
 }
+
+vector<int> twoSum(vector<int>& numbers, int target) {
+    int len = numbers.size();
+    vector<int> res;
+    if (len == 0) return res;
+    int l = 0, r = len - 1;
+    while (l < r) {
+        int sum = numbers[l] + numbers[r];
+        if (sum == target) {
+            res = {l + 1, r + 1};
+            break;
+        }
+        else if (sum < target) l++;
+        else r--;
+    }
+    return res;
+}
+
+vector<vector<int>> findContinuousSequence(int target) {
+    vector<vector<int>> res;
+    int l = 1, r = 2;
+    while (l < r) {
+        int sum = (l + r) * (r - l + 1) / 2;
+        if (sum == target) {
+            vector<int> temp;
+            for (int i = l; i <= r; i++)
+                temp.push_back(i);
+            res.push_back(temp);
+            l++;
+        }
+        else if (sum > target) l++;
+        else r++;
+    }
+    return res;
+}
