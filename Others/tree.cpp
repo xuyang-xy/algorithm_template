@@ -138,6 +138,33 @@ vector<vector<int>> levelOrder(TreeNode* root) {
 /*
 二叉树Z型遍历
 */
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>> ans;
+    if (!root) return ans;
+    int flag = 0;
+    queue<TreeNode*> Q;
+    Q.push(root);
+    while (!Q.empty()) {
+        vector<int> res;
+        int len = Q.size();
+        for (int i = 0; i < len; i++) {
+            TreeNode* temp = Q.front();
+            Q.pop();
+            res.push_back(temp->val);
+            if (temp->left) Q.push(temp->left);
+            if (temp->right) Q.push(temp->right);
+        }
+        if (!flag) ans.push_back(res);
+        else {
+            reverse(res.begin(), res.end());
+            ans.push_back(res);
+        }
+        flag = !flag;
+    }
+    return ans;
+}
+
+
 
 int maxDepth(TreeNode* root) {
     if (!root) return 0;
