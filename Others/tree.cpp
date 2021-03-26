@@ -36,8 +36,9 @@ TreeNode* upsideDownBinaryTree(TreeNode* root) {
     root->right = nullptr;
     return nroot;
 }
-
-
+/*
+二叉树前序遍历 递归非递归
+*/
 void preorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     res.push_back(n->val);
@@ -57,7 +58,9 @@ vector<int> preorderTraversal(TreeNode* n) {
     }
     return res;
 }
-
+/*
+二叉树中序遍历 递归非递归
+*/
 void inorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     inorder(res, n->left);
@@ -82,7 +85,9 @@ vector<int> inorderTraversal(TreeNode* root) {
     }
     return res;
 }
-
+/*
+二叉树后序遍历 递归非递归
+*/
 void postorder(vector<int>& res, TreeNode* n) {
     if (!n) return;
     postorder(res, n->left);
@@ -108,7 +113,9 @@ vector<int> postorderTraversal(TreeNode* root) {
     }
     return res;
 }
-
+/*
+二叉树层序遍历
+*/
 vector<vector<int>> levelOrder(TreeNode* root) {
     vector<vector<int>> res;
     if (!root) return res;
@@ -128,15 +135,9 @@ vector<vector<int>> levelOrder(TreeNode* root) {
     }
     return res;
 }
-
-TreeNode* invertTree(TreeNode* root) {
-    if (!root) return root;
-    TreeNode* nright = invertTree(root->left);
-    TreeNode* nleft = invertTree(root->right);
-    root->left = nleft;
-    root->right = nright;
-    return root;
-}
+/*
+二叉树Z型遍历
+*/
 
 int maxDepth(TreeNode* root) {
     if (!root) return 0;
