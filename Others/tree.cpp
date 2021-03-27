@@ -165,11 +165,16 @@ vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
 }
 
 
-
+/*
+二叉树最大深度
+*/
 int maxDepth(TreeNode* root) {
     if (!root) return 0;
     return max(maxDepth(root->left), maxDepth(root->right)) + 1;
 }
+/*
+二叉树的最小深度
+*/
 int minDepth(TreeNode* root) {
     if (!root) return 0;
     int l_deep = minDepth(root->left);
@@ -177,14 +182,33 @@ int minDepth(TreeNode* root) {
     if (l_deep * r_deep == 0) return max(l_deep, r_deep) + 1;
     else return min(l_deep, r_deep) + 1;
 }
-
+/*
+二叉树的直径
+*/
+int dfs(TreeNode* n, int& len) {
+    if (!n) return 0;
+    int l = dfs(n->left, len);
+    int r = dfs(n->right, len);
+    int h = max(l, r) + 1;
+    len = max(len, l + r + 1);
+    return h;
+}
+int diameterOfBinaryTree(TreeNode* root) {
+    if (!root) return 0;
+    int len = -1;
+    dfs(root, len);
+    return len - 1;
+}
+/*
+二叉树最大路径和
+*/
 int dfs(TreeNode* n, int& sum) {
     if (!n) return 0;
-    int l_val = dfs(n->left, sum);
-    int r_val = dfs(n->right, sum);
-    int temp = max(max(l_val + n->val, r_val + n->val), n->val);
-    sum = max(sum, max(temp, n->val + l_val + r_val));
-    return temp;
+    int l = dfs(n->left, sum);
+    int r = dfs(n->right, sum);
+    int h = max(max(l + n->val, r + n->val), n->val);
+    sum = max(sum, max(h, n->val + l + r));
+    return h;
 }
 int maxPathSum(TreeNode* root) {
     const int INF = 1e8;
@@ -192,6 +216,37 @@ int maxPathSum(TreeNode* root) {
     dfs(root, res);
     return res;
 }
+/*
+二叉树所有路径
+*/
+void dfs(TreeNode* n, string sum, vector<string>& ans) {
+    if (!n->left && !n->right) {
+        string nsum = sum + to_string(n->val);
+        ans.push_back(nsum);
+        return;
+    }
+    string nsum = sum + to_string(n->val) + "->";
+    if (n->left) dfs(n->left, nsum, ans);
+    if (n->right) dfs(n->right, nsum, ans);
+}
+vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> res;
+    if (!root) return res;
+    dfs(root, "", res);
+    return res;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     if (!root || p == root || q == root) return root;
