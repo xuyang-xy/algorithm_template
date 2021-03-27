@@ -217,6 +217,26 @@ int maxPathSum(TreeNode* root) {
     return res;
 }
 /*
+最长同值路径
+*/
+int dfs(TreeNode* n, int& len) {
+    if (!n) return 0;
+    int l = dfs(n->left, len);
+    int r = dfs(n->right, len);
+    int nl = (n->left && n->val == n->left->val) ? l + 1 : 1;
+    int nr = (n->right && n->val == n->right->val) ? r + 1 : 1;
+    len = max(len, nr + nl - 1);
+    return max(nl, nr);
+}
+int longestUnivaluePath(TreeNode* root) {
+    if (!root) return 0;
+    int res = 0;
+    dfs(root, res);
+    return res - 1;
+}
+
+
+/*
 二叉树所有路径
 */
 void dfs(TreeNode* n, string sum, vector<string>& ans) {
