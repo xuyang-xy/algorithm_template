@@ -265,8 +265,51 @@ bool hasPathSum(TreeNode* root, int targetSum) {
     if (!root) return false;
     return dfs(root, targetSum);
 }
-
-
+/*
+路径总和2
+*/
+void dfs(TreeNode* n, vector<int> p, vector<vector<int>>& res, int sum, int target) {
+    if (!n->left && !n->right) {
+        if (sum + n->val == target) {
+            p.push_back(n->val);
+            res.push_back(p);
+        }
+        return;
+    }
+    p.push_back(n->val);
+    if (n->left) dfs(n->left, p, res, sum + n->val, target);
+    if (n->right) dfs(n->right, p, res, sum + n->val, target);
+}
+vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+    vector<vector<int>> res;
+    if (!root) return res;
+    vector<int> path;
+    dfs(root, path, res, 0, targetSum);
+    return res;
+}
+/*
+路径总和3
+*/
+int ans;
+void dfs(TreeNode* n, int sum) {
+    if (!n) return;
+    int nsum = sum - n->val;
+    if (nsum == 0) ans++;
+    dfs(n->left, nsum);
+    dfs(n->right, nsum);
+}
+void view(TreeNode* n, int sum) {
+    if (!n) return;
+    dfs(n, sum);
+    view(n->left, sum);
+    view(n->right, sum);
+}
+int pathSum(TreeNode* root, int sum) {
+    if (!root) return 0;
+    ans = 0;
+    view(root, sum);
+    return ans;
+}
 
 
 
