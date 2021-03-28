@@ -234,8 +234,6 @@ int longestUnivaluePath(TreeNode* root) {
     dfs(root, res);
     return res - 1;
 }
-
-
 /*
 二叉树所有路径
 */
@@ -255,8 +253,18 @@ vector<string> binaryTreePaths(TreeNode* root) {
     dfs(root, "", res);
     return res;
 }
-
-
+/*
+路径总和
+*/
+bool dfs(TreeNode* n, int targetSum) {
+    if (!n) return false;
+    if (!n->left && !n->right) return targetSum == n->val;
+    return (dfs(n->left, targetSum - n->val) || dfs(n->right, targetSum - n->val));
+}
+bool hasPathSum(TreeNode* root, int targetSum) {
+    if (!root) return false;
+    return dfs(root, targetSum);
+}
 
 
 
