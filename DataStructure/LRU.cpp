@@ -2,8 +2,8 @@ struct DLinkedNode {
     int key, value;
     DLinkedNode* prev;
     DLinkedNode* next;
-    DLinkedNode():key(0), value(0), prev(nullptr), next(nullptr){}
-    DLinkedNode(int _key, int _value):key(_key), value(_value), prev(nullptr), next(nullptr){}
+    DLinkedNode(): key(0), value(0), prev(nullptr), next(nullptr) {}
+    DLinkedNode(int _key, int _value): key(_key), value(_value), prev(nullptr), next(nullptr) {}
 };
 
 class LRUCache {
@@ -31,12 +31,12 @@ public:
             DLinkedNode* node = new DLinkedNode(key, value);
             cache[key] = node;
             addToHead(node);
-            ++size;
+            size++;
             if (size > capacity) {
                 DLinkedNode* removed = removeTail();
                 cache.erase(removed->key);
                 delete removed;
-                --size;
+                size--;
             }
         }
         else {
