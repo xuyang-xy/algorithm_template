@@ -55,7 +55,7 @@ void qsort(vector<int>& nums, int l, int r) {
     int temp = rand() % (r - l + 1) + l;
     swap(nums[temp], nums[r]);
     int flag = nums[r];
-    int lt = l - 1, gt = r, i = l;
+    int lt = l - 1, gt = r, i = l; // lt: <区的右边界 gt:>区的左边界
     while (i < gt) {
         if (nums[i] < flag) {
             swap(nums[i], nums[lt + 1]);
@@ -77,6 +77,7 @@ void sort(vector<int>& nums) {
     qsort(nums, 0, len - 1);
 }
 
+// 模板题
 /*
 leetcode 75 颜色分类
 基于三路划分实现 一次遍历 O(n)
