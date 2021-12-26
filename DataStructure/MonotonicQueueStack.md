@@ -66,4 +66,35 @@ vector<int> nextGreaterElement(vector<int>& nums) {
     }
     return res;
 }
+vector<int> dailyTemperatures(vector<int>& T) {
+    stack<int> s;
+    vector<int> res;
+    for (int i = 0; i < T.size(); i++) {
+        // [73]
+        // [74] 73
+        // [75] 74
+        // [75 71]
+        // [75 71 69]
+        // [75 72] 69 71
+        // [76] 72 75
+        // [76 73] 
+        // 底-》顶 递减栈
+        while (!s.empty() && T[i] > T[s.top()]) {
+            int pre = s.top();
+            res[pre] = i - pre;
+            s.pop();
+        }
+        s.push(i);
+    }
+    return res;
+}
+```
+相关题目：  
+```
+(1) Leetcode 739. 每日温度
+(2) Leetcode 084. 矩阵图中最大矩形
+(3) 
+(4) 
+(5) 
+(6) 
 ```
