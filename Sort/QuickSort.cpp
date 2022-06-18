@@ -58,13 +58,13 @@ void qsort(vector<int>& nums, int l, int r) {
     int lt = l - 1, gt = r, i = l; // lt: <区的右边界 gt:>区的左边界
     while (i < gt) {
         if (nums[i] < flag) {
-            swap(nums[i], nums[lt + 1]);
             lt++;
+            swap(nums[lt], nums[i]);
             i++;
         }
         else if (nums[i] > flag) {
-            swap(nums[i], nums[gt - 1]);
             gt--;
+            swap(nums[gt], nums[i]);
         }
         else i++;
     }
