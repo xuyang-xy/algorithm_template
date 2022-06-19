@@ -82,25 +82,24 @@ void sort(vector<int>& nums) {
 leetcode 75 颜色分类
 基于三路划分实现 一次遍历 O(n)
 */
-void sort(vector<int>& nums, int l, int r) {
-    if (l >= r) return;
-    int lt = l - 1;
-    int gt = r + 1;
-    int i = l;
-    while (i <= r && i < gt) {
-        if (nums[i] < 1) {
-            swap(nums[i], nums[lt + 1]);
-            lt++;
-            i++;
+int div(vector<int>& num, int l, int r) {
+    if (l >= r) return -1;
+    int flag = 1, tl = l - 1, tr = r + 1;
+    int index = l;
+    while (index < tr) {
+        if (num[index] < flag) {
+            tl++;
+            swap(num[tl], num[index]);
+            index++;
         }
-        else if (nums[i] > 1) {
-            swap(nums[i], nums[gt - 1]);
-            gt--;
+        else if (num[index] > flag) {
+            tr--;
+            swap(num[tr], num[index]);
         }
-        else i++;
-    }
+        else index++;
+    } 
+    return 0;
 }
 void sortColors(vector<int>& nums) {
-    int len = nums.size();
-    sort(nums, 0, len - 1);
+    int ret = div(nums, 0, nums.size() - 1);
 }
