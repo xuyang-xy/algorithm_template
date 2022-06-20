@@ -1,22 +1,20 @@
 /*
 堆排序 时间复杂度O(nlogn)
 升序排序，基于大顶堆Key[i] >= Key[2i+1] && key >= key[2i+2]
-相关题目：topk， 数据流中位数
 */
 void AdjustHeap(vector<int>& nums, int root, int len) {
-    int temp = root;
-    int left = root * 2 + 1, right = root * 2 + 2;
-    if (left < len && nums[left] > nums[temp]) temp = left;
-    if (right < len && nums[right] > nums[temp]) temp = right;
-    if (temp != root) {
-        swap(nums[temp], nums[root]);
-        AdjustHeap(nums, temp, len);
+    int tmp = root;
+    int l = root * 2 + 1, r = root * 2 + 2;
+    if (l < len && nums[l] > nums[tmp]) tmp = l;
+    if (r < len && nums[r] > nums[tmp]) tmp = r;
+    if (tmp != root) {
+        swap(nums[tmp], nums[root]);
+        AdjustHeap(nums, tmp, len);
     }
 }
 void BuildHeap(vector<int>& nums) {
-    int len = nums.size();
-    for (int i = len / 2 - 1; i >= 0; i--) {
-        AdjustHeap(nums, i, len);
+    for (int i = nums.size() / 2 - 1; i >= 0; i--) {
+        AdjustHeap(nums, i, nums.size());
     }
 }
 void HeapSort(vector<int>& nums) {
@@ -26,3 +24,6 @@ void HeapSort(vector<int>& nums) {
         AdjustHeap(nums, 0, i);
     }
 }
+
+// 模板题
+/*topk， 数据流中位数*/
