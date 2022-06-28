@@ -4,6 +4,7 @@
 */
 void AdjustHeap(vector<int>& nums, int root, int len) {
     // 自顶向下调整
+    // 不保证不被调整的子树的单调性
     int tmp = root;
     int l = root * 2 + 1, r = root * 2 + 2;
     if (l < len && nums[l] > nums[tmp]) tmp = l;
@@ -33,7 +34,21 @@ void HeapSort(vector<int>& nums) {
     数据流中位数
 */
 // leetcode 215 数组第k大
-
+void AdjustHeap(vector<int>& nums, int root, int len) {
+    int tmp = root;
+    int l = root * 2 + 1, r = root * 2 + 2;
+    if (l < len && nums[l] > nums[tmp]) tmp = l;
+    if (r < len && nums[r] > nums[tmp]) tmp = r;
+    if (tmp != root) {
+        swap(nums[tmp], nums[root]);
+        AdjustHeap(nums, tmp, len);
+    }
+}
+void BuildHeap(vector<int>& nums) {
+    for (int i = nums.size() / 2 - 1; i >= 0; i--) {
+        AdjustHeap(nums, i, nums.size());
+    }
+}
 int findKthLargest(vector<int>& nums, int k) {
     // api
     // priority_queue<int> maxheap;
